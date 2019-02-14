@@ -1,62 +1,43 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var bodyParser = require('body-parser');
+'use strict';
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const express = require('express');
+const log = require('./tools/logger')
+const bodyParser = require('body-parser');
+const db = require('./db')
+//midleware
+const catchErrors = require('./middleware/catchErrors')
+const { preJson } = require('./middleware/pre')
 
-const categoryControllers = require('./routes/app');
-//const exam = require('./example');
 
-var db = require('./db');
+const categoryControllers = require('./lib/index');
 
-var app = express();
+const app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-
- 
-
-app.use(logger('dev'));
-app.use(express.json());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.urlencoded({ extended: true }));
 
+const envs = ['production', 'development', 'test'];
+if (envs.indexOf(process.env.NODE_ENV) < 0) {
+  throw new Error({ 'Environment error': 'Env not set' });
+}
 
+app.get('/', (req, res) => {
+  res.send({ status: 'Online', hey: req.protocol + '://' + req.get('host') + req.originalUrl });
+});
 
+app.use('/', preJson, categoryControllers);
 
-//app.use('/', indexRouter);
-//app.use('/users', usersRouter);
+db.init(function (error) {
+  if (error)
+    throw error;
+  log.fail('Database connection Fail !')
 
-
-app.use('/', categoryControllers);
-//app.use('', exam);
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+app.use(catchErrors)
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+app.listen(process.env.NODE.ENV || 3000, function (error) {
+  if (error) throw error;
+  log.info(`Listening on ${process.env.NODE.ENV || 3000}`);
 });
-
-app.listen(3000, function() {
-    console.log('Example app listening on port 3000!');
-});
-
-module.exports = app;
