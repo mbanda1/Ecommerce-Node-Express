@@ -17,6 +17,7 @@ module.exports.init = function () {
     let db = client.db(dbName);
     // module.exports.client = client;
     module.exports.userCollection = db.collection('users');
+    module.exports.addressCollection = db.collection('address');
 
   })
 
