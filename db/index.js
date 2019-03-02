@@ -18,7 +18,8 @@ module.exports.init = function () {
     // module.exports.client = client;
     module.exports.userCollection = db.collection('users');
     module.exports.addressCollection = db.collection('address');
-
+    module.exports.ordersCollection = db.collection('orders');
+    module.exports.stationCollection = db.collection('stations');
   })
 
 }
