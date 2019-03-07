@@ -1,44 +1,41 @@
-'use strict';
+'use strict'
 
-const express = require('express');
+const express = require('express')
 const log = require('./tools/logger')
-const bodyParser = require('body-parser');
+const bodyParser = require('body-parser')
 const db = require('./db')
-//midleware
+// midleware
 const catchErrors = require('./middleware/catchErrors')
 const { preJson } = require('./middleware/pre')
 
+const categoryControllers = require('./lib/index')
 
-const categoryControllers = require('./lib/index');
+const app = express()
 
-const app = express();
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use('./uploads', express.static('uploads'))
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use('./uploads', express.static('uploads'));
-
-const envs = ['production', 'development', 'test'];
+const envs = ['production', 'development', 'test']
 if (envs.indexOf(process.env.NODE_ENV) < 0) {
-  throw new Error({ 'Environment error': 'Env not set' });
+  throw new Error({ 'Environment error': 'Env not set' })
 }
 
 app.get('/', (req, res) => {
-  res.send({ status: 'Online', hey: req.protocol + '://' + req.get('host') + req.originalUrl });
-});
+  res.send({ status: 'Online', hey: req.protocol + '://' + req.get('host') + req.originalUrl })
+})
 
-app.use('/', preJson, categoryControllers);
+app.use('/', preJson, categoryControllers)
 
 db.init(function (error) {
-  if (error)
-    throw error;
+  if (error) { throw error }
   log.fail('Database connection Fail !')
-
-});
+})
 
 // error handler
 app.use(catchErrors)
 
 app.listen(process.env.NODE.ENV || 3000, function (error) {
-  if (error) throw error;
-  log.info(`Listening on ${process.env.NODE.ENV || 3000}`);
-});
+  if (error) throw error
+  log.info(`Listening on ${process.env.NODE.ENV || 3000}`)
+})

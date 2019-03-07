@@ -1,3 +1,3 @@
 module.exports = {
-    user: ['insert', 'inspect']
+  user: ['insert', 'inspect']
 }
