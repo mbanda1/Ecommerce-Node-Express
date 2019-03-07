@@ -20,6 +20,9 @@ module.exports.init = function () {
     module.exports.addressCollection = db.collection('address');
     module.exports.ordersCollection = db.collection('orders');
     module.exports.stationCollection = db.collection('stations');
+    module.exports.mpesaCollection = db.collection('mpesa');
+    module.exports.categoryCollection = db.collection('categories');
+    module.exports.brandCollection = db.collection('brands');
   })
 
 }

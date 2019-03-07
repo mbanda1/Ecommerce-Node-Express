@@ -15,6 +15,7 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use('./uploads', express.static('uploads'));
 
 const envs = ['production', 'development', 'test'];
 if (envs.indexOf(process.env.NODE_ENV) < 0) {

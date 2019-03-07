@@ -18,6 +18,7 @@
     "debug": "~2.6.9",
     "express": "~4.16.0",
     "find": "^0.2.9",
+    "fs": "0.0.1-security",
     "glob": "^7.1.2",
     "globe": "^0.3.0",
     "http-errors": "~1.6.2",
