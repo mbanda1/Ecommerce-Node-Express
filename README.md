@@ -1,17 +1,25 @@
-# Ecommerce-Backend
+[![Express Logo](https://i.cloudup.com/zfY6lL7eFa-3000x3000.png)](http://expressjs.com/)
 
-A node js back Logic ment to support an Ecommerce Platform in oUR Case ANDROID App.
 
-Expree Framework, Mongodb, Es- v5 and v6. 
+A nodeJs server Logic ment to support an Ecommerce platform *Android Or WebApp*.
 
-First rendering and proper json Objects especially with the Boolean `DataType`.
+scalled to work with mongodb drivers. 
 
-##Clone or Pull the Repo,
+## Installation
 
-## npm inistall
+This is a [Node.js](https://nodejs.org/en/) module available through the
+[npm registry](https://www.npmjs.com/).
 
-## npm nodemon start
+Before installing, [download and install Node.js](https://nodejs.org/en/download/).
+Node.js 5.** or higher is required.
 
-## Listen On port 3000
+## Features
 
-  ** Bravoo **
+  * Robust routing
+  * Focus on high performance
+  * HTTP helpers (redirection, caching, etc)
+  * Executable for generating applications quickly
+
+##Author
+
+Lead maintainer Nixon Mbanda [LinkedIn](https://www.linkedin.com/in/nixon-mbanda-356b25b9/) *mail* mbandanixon@gmail.com

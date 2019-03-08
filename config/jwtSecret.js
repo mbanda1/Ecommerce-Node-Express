@@ -1,0 +1,1 @@
+module.exports = process.env.JWT_SECRET || '4R5T6YGHU896GCBDFW24C43F64G64G67'
