@@ -27,9 +27,10 @@ const getOrder = (req, res, next) => {
 	const { _id } = req.params
 
 	findOrderById(_id)
-		.then(() => {
+		.then((data) => {
 			res.status(201).json({
 				success,
+				data,
 			})
 		})
 		.catch((error) => {

@@ -1,18 +1,17 @@
-const { ordersServices } = require('../Services')
+const { stationsServices } = require('../Services')
 const {
     addStation,
 	findStationById,
 	findStationByFields,
 	updateStationById,
 	deleteStationById,
-} = ordersServices
+} = stationsServices
 
 const success = true
 
 const postStation = (req, res, next) => {
 	const { data } = req.body
-
-	addStation(data)
+ 	 addStation(data)
 		.then(() => {
 			res.status(201).json({
 				success,
@@ -27,9 +26,10 @@ const getStation = (req, res, next) => {
 	const { _id } = req.params
 
 	findStationById(_id)
-		.then(() => {
+		.then((data) => {
 			res.status(201).json({
 				success,
+				data,
 			})
 		})
 		.catch((error) => {

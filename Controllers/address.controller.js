@@ -27,9 +27,10 @@ const getAddress = (req, res, next) => {
 	const { _id } = req.params
 
 	findAddressById(_id)
-		.then(() => {
+		.then((data) => {
 			res.status(201).json({
 				success,
+				data,
 			})
 		})
 		.catch((error) => {
