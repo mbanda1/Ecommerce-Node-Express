@@ -11,7 +11,14 @@ const { brandsServices } = require('../Services');
 const success = true
 
 const postBrand = (req, res, next) => {
-	const { data } = req.body
+	const  { body }  = req
+	let data = {...body}
+
+    if (req.file && req.file.filename){
+		data.picture = req.file.filename
+	} else{
+		data = data.data
+	}
 
 	addBrand(data)
 		.then(() => {
@@ -28,9 +35,10 @@ const getBrand = (req, res, next) => {
 	const { _id } = req.params
 
 	findBrandById(_id)
-		.then(() => {
+		.then((data) => {
 			res.status(201).json({
 				success,
+				data,
 			})
 		})
 		.catch((error) => {

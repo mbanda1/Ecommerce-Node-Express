@@ -10,8 +10,15 @@ const {
 const success = true
 
 const postCategory = (req, res, next) => {
-	const { data } = req.body
-
+	const  { body }  = req
+	let data = {...body}
+	
+    if (req.file && req.file.filename){
+		data.picture = req.file.filename
+	} else{
+		data = data.data
+	}
+ 
 	addCategory(data)
 		.then(() => {
 			res.status(201).json({
@@ -27,9 +34,10 @@ const getCategory = (req, res, next) => {
 	const { _id } = req.params
 
 	findCategoryById(_id)
-		.then(() => {
+		.then((data) => {
 			res.status(201).json({
 				success,
+				data,
 			})
 		})
 		.catch((error) => {
