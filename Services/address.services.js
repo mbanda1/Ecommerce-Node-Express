@@ -21,8 +21,7 @@ const addAddress = (data) => {
 
 		return dbInsert.insertOp(InsertData, 'addressCollection')
 	} catch (e) {
-		console.log(e)
-		if (e instanceof APIerror) throw e
+ 		if (e instanceof APIerror) throw e
 		throw new APIerror('Failed to add new address')
 	}
 }
@@ -31,25 +30,33 @@ const findAddressById = (id) =>
 	dbFind
 		.findOne(id, 'addressCollection')
 		.then((d) => d)
-		.catch((e) => e)
+		.catch((e) => {
+			throw new APIerror('Failed to find address by id')
+		})
 
 const findAddressByField = (data) =>
 	dbFind
 		.findMany(data, 'addressCollection')
 		.then((d) => d)
-		.catch((e) => e)
+		.catch((e) => {
+			throw new APIerror('Failed to find address by field')
+		})
 
 const updateAddressById = (id, data) =>
 	dbUpdate
 		.updateOp(id, data, 'addressCollection')
 		.then((d) => d)
-		.catch((e) => e)
+		.catch((e) => {
+			throw new APIerror('Failed to delete address by id')
+		})
 
-const deleteAddressById = (idata) =>
+const deleteAddressById = (id) =>
 	dbDelete
-		.deleteOp(i, 'addressCollection')
+		.deleteOp(id, 'addressCollection')
 		.then((d) => d)
-		.catch((e) => e)
+		.catch((e) => {
+			throw new APIerror('Failed to address brand by id')
+		})
 
 module.exports = {
 	addAddress,

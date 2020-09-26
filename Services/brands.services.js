@@ -4,7 +4,7 @@ const { dbInsert, dbUpdate, dbDelete, dbFind } = require('../Datastore')
 const addBrand = (data) => {
 	try {
 		const fields = [
-			'brandName, brandBrand',
+			'brandBrand',
 			'brand_type',
 			'brandName',
 			'brandPrice',
@@ -24,13 +24,13 @@ const addBrand = (data) => {
 			brandPrice: data.brandPrice,
 			brandSpecification: data.brandSpecification,
 			brandDescription: data.brandDescription,
-			picture: file.filename,
 			insertedOn: new Date(),
 		}
 
 		return dbInsert.insertOp(insertData, 'brandCollection')
 	} catch (e) {
-		e
+		if (e instanceof APIerror) throw e
+		throw new APIerror('Failed to add new brand')
 	}
 }
 
@@ -38,25 +38,33 @@ const findBrandById = (id) =>
 	dbFind
 		.findOne(id, 'brandCollection')
 		.then((d) => d)
-		.catch((e) => e)
+		.catch((e) => {
+			throw new APIerror('Failed to find brand by id')
+		})
 
 const findBrandsByField = (data) =>
 	dbFind
 		.findMany(data, 'brandCollection')
 		.then((d) => d)
-		.catch((e) => e)
+		.catch((e) => {
+			throw new APIerror('Failed to find brand by field')
+		})
 
 const updateBrandById = (id, data) =>
 	dbUpdate
 		.updateOp(id, data, 'brandCollection')
 		.then((d) => d)
-		.catch((e) => e)
+		.catch((e) => {
+			throw new APIerror('Failed to update brand by id')
+		})
 
-const deleteBrandById = (idata) =>
+const deleteBrandById = (id) =>
 	dbDelete
-		.deleteOp(i, 'brandCollection')
+		.deleteOp(id, 'brandCollection')
 		.then((d) => d)
-		.catch((e) => e)
+		.catch((e) => {
+			throw new APIerror('Failed to delete brand by id')
+		})
 
 module.exports = {
 	addBrand,
